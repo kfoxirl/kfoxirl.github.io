@@ -134,7 +134,8 @@
                 <section class="mt-8">
                     <h3 class="font-tech text-2xl section-title">TECHNICAL SKILLS</h3>
                     <div class="text-sm mt-4 space-y-3">
-                        <p><strong>Languages:</strong> C#, Bash, PowerShell, SQL</p>
+                        <p><strong>Languages:</strong> C#, Python, Bash, PowerShell, SQL</p>
+                        <p><strong>LLM & AI:</strong> LangChain, Ollama, Vector DBs (Chroma)</p>
                         <p><strong>Virtualization:</strong> VMware, Hyper-V, KVM</p>
                         <p><strong>Containers:</strong> Docker, Kubernetes</p>
                         <p><strong>Cloud Platforms:</strong> Nextcloud, eHealth VNAS</p>
@@ -191,6 +192,7 @@
         
         <footer class="text-center mt-8 pt-4 border-t-2 border-[#FF00FF]">
              <button id="signal-message-btn" class="gemini-btn">✨ Send Secure Message</button>
+            <button id="download-pdf-btn" class="gemini-btn ml-2">📄 Download as PDF</button>
             <p class="text-xs italic mt-4">> References available upon request</p>
         </footer>
 
@@ -209,9 +211,9 @@
         </div>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
             // --- Signal Message Logic ---
             const signalModal = document.getElementById('signal-modal');
             const signalMessageBtn = document.getElementById('signal-message-btn');
@@ -232,6 +234,21 @@
                 const signalLink = `https://signal.me/#u/${signalUsername}?text=${encodedMessage}`;
                 window.open(signalLink, '_blank');
                 signalModal.style.display = 'none';
+            });
+
+            // --- PDF Download Logic ---
+            const downloadPdfBtn = document.getElementById('download-pdf-btn');
+            downloadPdfBtn.addEventListener('click', () => {
+                const resumeElement = document.querySelector('.resume-container');
+                const opt = {
+                    margin:       0.5,
+                    filename:     'Karl_Fox_Resume.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                // Use the html2pdf library to generate the PDF
+                html2pdf().from(resumeElement).set(opt).save();
             });
         });
     </script>
